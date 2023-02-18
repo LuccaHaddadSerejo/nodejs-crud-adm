@@ -1,19 +1,16 @@
 import { QueryResult } from "pg";
+import {
+  reqUserSchema,
+  resUserSchema,
+  resUserSchemaWithoutPassword,
+  userSchema,
+} from "../schemas/usersSchemas";
+import { z } from "zod";
 
-interface iUserReq {
-  name: string;
-  email: string;
-  password: string;
-  admin: boolean;
-  active: boolean;
-}
-
-interface iUser extends iUserReq {
-  id: number;
-}
-
-type userRes = Omit<iUser, "id" | "password">;
-type userResWithoutPassword = Omit<iUser, "password">;
+type iUserReq = z.infer<typeof reqUserSchema>;
+type iUser = z.infer<typeof userSchema>;
+type userRes = z.infer<typeof resUserSchema>;
+type userResWithoutPassword = z.infer<typeof resUserSchemaWithoutPassword>;
 type userQueryRes = QueryResult<userResWithoutPassword>;
 
 export { iUserReq, iUser, userRes, userResWithoutPassword, userQueryRes };

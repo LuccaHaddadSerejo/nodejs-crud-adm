@@ -7,6 +7,7 @@ import {
   userQueryRes,
   userResWithoutPassword,
 } from "../../interfaces/usersInterfaces";
+import { resUserSchemaWithoutPassword } from "../../schemas/usersSchemas";
 
 const createUserService = async (
   data: iUserReq
@@ -18,7 +19,7 @@ const createUserService = async (
             users
         WHERE
             email = $1;
-    `;
+  `;
 
   let queryConfig: QueryConfig = {
     text: queryString,
@@ -37,15 +38,15 @@ const createUserService = async (
                 users (%I)
             VALUES 
                 (%L)
-            RETURNING id, name, email, admin, active;
-        `,
+            RETURNING *;
+   `,
     Object.keys(data),
     Object.values(data)
   );
 
   queryResult = await client.query(queryString);
 
-  return queryResult.rows[0];
+  return resUserSchemaWithoutPassword.parse(queryResult.rows[0]);
 };
 
 export default createUserService;
