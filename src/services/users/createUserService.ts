@@ -1,38 +1,16 @@
 import { client } from "../../database";
 import format from "pg-format";
-import { QueryConfig } from "pg";
-import { AppError } from "../../errors";
 import {
   iUserReq,
   userQueryRes,
-  userResWithoutPassword,
+  userWithoutPassword,
 } from "../../interfaces/usersInterfaces";
 import { resUserSchemaWithoutPassword } from "../../schemas/usersSchemas";
 
 const createUserService = async (
   data: iUserReq
-): Promise<userResWithoutPassword> => {
-  let queryString: string = `
-        SELECT
-            *
-        FROM
-            users
-        WHERE
-            email = $1;
-  `;
-
-  let queryConfig: QueryConfig = {
-    text: queryString,
-    values: [data.email],
-  };
-
-  let queryResult: userQueryRes = await client.query(queryConfig);
-
-  if (queryResult.rowCount > 0) {
-    throw new AppError("User already exists", 409);
-  }
-
-  queryString = format(
+): Promise<userWithoutPassword> => {
+  const queryString = format(
     `
             INSERT INTO
                 users (%I)
@@ -44,7 +22,7 @@ const createUserService = async (
     Object.values(data)
   );
 
-  queryResult = await client.query(queryString);
+  const queryResult: userQueryRes = await client.query(queryString);
 
   return resUserSchemaWithoutPassword.parse(queryResult.rows[0]);
 };

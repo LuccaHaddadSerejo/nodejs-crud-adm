@@ -1,7 +1,6 @@
 import { QueryResult } from "pg";
 import {
   reqUserSchema,
-  resUserSchema,
   resUserSchemaWithoutPassword,
   userSchema,
 } from "../schemas/usersSchemas";
@@ -9,8 +8,17 @@ import { z } from "zod";
 
 type iUserReq = z.infer<typeof reqUserSchema>;
 type iUser = z.infer<typeof userSchema>;
-type userRes = z.infer<typeof resUserSchema>;
-type userResWithoutPassword = z.infer<typeof resUserSchemaWithoutPassword>;
-type userQueryRes = QueryResult<userResWithoutPassword>;
+type userWithoutPassword = z.infer<typeof resUserSchemaWithoutPassword>;
+type usersList = Array<userWithoutPassword>;
 
-export { iUserReq, iUser, userRes, userResWithoutPassword, userQueryRes };
+type userQueryResWithoutPassword = QueryResult<userWithoutPassword>;
+type userQueryRes = QueryResult<iUser>;
+
+export {
+  iUserReq,
+  iUser,
+  userWithoutPassword,
+  userQueryResWithoutPassword,
+  userQueryRes,
+  usersList,
+};
