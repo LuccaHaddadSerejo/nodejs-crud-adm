@@ -39,12 +39,12 @@ const loginService = async (data: iLoginReq): Promise<string> => {
 
   const token: string = jwt.sign(
     {
-      teste: "teste",
+      admin: queryResult.rows[0].admin,
     },
     process.env.SECRET_KEY!,
     {
       expiresIn: "24h",
-      subject: queryResult.rows[0].id.toString(),
+      subject: queryResult.rows[0].id + "",
     }
   );
 

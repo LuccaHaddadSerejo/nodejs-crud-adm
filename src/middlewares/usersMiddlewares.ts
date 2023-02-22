@@ -34,6 +34,36 @@ const checkIfUserExists = async (
   return next();
 };
 
+const checkValidId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<Response | void> => {
+  const id: number = +req.params.id;
+
+  const queryString: string = `
+        SELECT
+            *
+        FROM
+            users
+        WHERE
+            id = $1;
+    `;
+
+  const queryConfig: QueryConfig = {
+    text: queryString,
+    values: [id],
+  };
+
+  const queryResult: QueryResult = await client.query(queryConfig);
+
+  if (queryResult.rowCount === 0) {
+    throw new AppError("User not found", 404);
+  }
+
+  return next();
+};
+
 const checkUniqueEmail = async (
   req: Request,
   res: Response,
@@ -127,6 +157,7 @@ const matchLoggedUserWithParamId = async (
 
 export {
   checkIfUserExists,
+  checkValidId,
   checkIfUserIsActive,
   checkUniqueEmail,
   checkIfUserIsAdmin,
