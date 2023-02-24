@@ -4,7 +4,7 @@ import { client } from "../../database";
 import {
   iUserReq,
   userWithoutPassword,
-  userQueryResWithoutPassword,
+  userQueryRes,
 } from "../../interfaces/usersInterfaces";
 import { resUserSchemaWithoutPassword } from "../../schemas/usersSchemas";
 
@@ -26,9 +26,7 @@ const updateLoggedUser = async (
     values: [id],
   };
 
-  let queryResult: userQueryResWithoutPassword = await client.query(
-    queryConfig
-  );
+  let queryResult: userQueryRes = await client.query(queryConfig);
 
   queryString = format(
     `
