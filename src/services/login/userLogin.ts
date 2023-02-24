@@ -1,5 +1,4 @@
 import "dotenv/config";
-
 import { AppError } from "../../errors";
 import { QueryConfig } from "pg";
 import { client } from "../../database";

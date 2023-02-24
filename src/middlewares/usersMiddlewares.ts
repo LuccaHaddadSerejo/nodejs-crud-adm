@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import { QueryConfig, QueryResult } from "pg";
-
 import { AppError } from "../errors";
 import { client } from "../database";
 import { userQueryRes } from "../interfaces/usersInterfaces";

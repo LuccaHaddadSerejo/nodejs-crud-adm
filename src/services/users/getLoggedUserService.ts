@@ -2,7 +2,6 @@ import {
   userQueryRes,
   userWithoutPassword,
 } from "../../interfaces/usersInterfaces";
-
 import { QueryConfig } from "pg";
 import { client } from "../../database";
 import { resUserSchemaWithoutPassword } from "../../schemas/usersSchemas";

@@ -2,7 +2,6 @@ import {
   userQueryResWithoutPassword,
   usersList,
 } from "../../interfaces/usersInterfaces";
-
 import { client } from "../../database";
 
 const listAllUsersService = async (): Promise<usersList> => {

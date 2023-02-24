@@ -3,7 +3,6 @@ import {
   userQueryRes,
   userWithoutPassword,
 } from "../../interfaces/usersInterfaces";
-
 import { QueryConfig } from "pg";
 import { client } from "../../database";
 import format from "pg-format";

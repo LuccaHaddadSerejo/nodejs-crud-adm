@@ -1,7 +1,5 @@
 import "express-async-errors";
-
 import express, { Application } from "express";
-
 import { handleErrors } from "./errors";
 import loginRouters from "./routers/loginRoutes";
 import userRouters from "./routers/usersRoutes";

@@ -2,7 +2,6 @@ import {
   checkIfUserExists,
   checkIfUserIsActive,
 } from "../middlewares/usersMiddlewares";
-
 import { Router } from "express";
 import checkReqData from "../middlewares/validateDataMiddleware";
 import { loginController } from "../controllers/loginControllers";

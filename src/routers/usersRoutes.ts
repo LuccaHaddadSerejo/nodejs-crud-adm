@@ -13,7 +13,6 @@ import {
   updateUserController,
 } from "../controllers/usersControllers";
 import { reqUserSchema, updateUserSchema } from "../schemas/usersSchemas";
-
 import { Router } from "express";
 import checkIfTokenIsValid from "../middlewares/validateTokenMiddleware";
 import checkReqData from "../middlewares/validateDataMiddleware";

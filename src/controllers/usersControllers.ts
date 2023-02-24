@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { iUserReq } from "../interfaces/usersInterfaces";
 import createUserService from "../services/users/createUserService";
 import listAllUsersService from "../services/users/getAllUsersService";
 import getLoggedUserService from "../services/users/getLoggedUserService";
