@@ -11,9 +11,7 @@ const createUsersController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const data: iUserReq = req.body;
-
-  const user = await createUserService(data);
+  const user = await createUserService(req.body);
 
   return res.status(201).json(user);
 };
@@ -22,7 +20,7 @@ const getAllUsersController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const allUsersArr = await listAllUsersService(req.body);
+  const allUsersArr = await listAllUsersService();
 
   return res.status(200).json(allUsersArr);
 };

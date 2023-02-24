@@ -2,7 +2,7 @@ import { QueryConfig } from "pg";
 import { client } from "../../database";
 import {
   userWithoutPassword,
-  userQueryResWithoutPassword,
+  userQueryRes,
 } from "../../interfaces/usersInterfaces";
 import { resUserSchemaWithoutPassword } from "../../schemas/usersSchemas";
 
@@ -25,9 +25,7 @@ const getLoggedUserService = async (
     values: [id],
   };
 
-  const queryResult: userQueryResWithoutPassword = await client.query(
-    queryConfig
-  );
+  const queryResult: userQueryRes = await client.query(queryConfig);
 
   return resUserSchemaWithoutPassword.parse(queryResult.rows[0]);
 };
