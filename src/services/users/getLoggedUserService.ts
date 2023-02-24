@@ -1,9 +1,10 @@
+import {
+  userQueryRes,
+  userWithoutPassword,
+} from "../../interfaces/usersInterfaces";
+
 import { QueryConfig } from "pg";
 import { client } from "../../database";
-import {
-  userWithoutPassword,
-  userQueryRes,
-} from "../../interfaces/usersInterfaces";
 import { resUserSchemaWithoutPassword } from "../../schemas/usersSchemas";
 
 const getLoggedUserService = async (

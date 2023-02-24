@@ -1,9 +1,10 @@
-import { QueryResult } from "pg";
 import {
   reqUserSchema,
   resUserSchemaWithoutPassword,
   userSchema,
 } from "../schemas/usersSchemas";
+
+import { QueryResult } from "pg";
 import { z } from "zod";
 
 type iUserReq = z.infer<typeof reqUserSchema>;

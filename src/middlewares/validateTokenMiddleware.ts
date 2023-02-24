@@ -1,7 +1,9 @@
+import "dotenv/config";
+
 import { NextFunction, Request, Response } from "express";
+
 import { AppError } from "../errors";
 import jwt from "jsonwebtoken";
-import "dotenv/config";
 
 const checkIfTokenIsValid = async (
   req: Request,
@@ -23,7 +25,7 @@ const checkIfTokenIsValid = async (
 
     req.user = {
       admin: decoded.admin,
-      id: parseInt(decoded.sub),
+      id: +decoded.subject,
     };
 
     return next();

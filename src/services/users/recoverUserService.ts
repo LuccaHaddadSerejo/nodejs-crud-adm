@@ -1,9 +1,10 @@
-import { QueryConfig } from "pg";
-import { client } from "../../database";
 import {
   userQueryRes,
   userWithoutPassword,
 } from "../../interfaces/usersInterfaces";
+
+import { QueryConfig } from "pg";
+import { client } from "../../database";
 import { resUserSchemaWithoutPassword } from "../../schemas/usersSchemas";
 
 const recoverUserService = async (id: number): Promise<userWithoutPassword> => {

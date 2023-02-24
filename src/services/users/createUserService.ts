@@ -1,10 +1,11 @@
-import { client } from "../../database";
-import format from "pg-format";
 import {
   iUserReq,
   userQueryRes,
   userWithoutPassword,
 } from "../../interfaces/usersInterfaces";
+
+import { client } from "../../database";
+import format from "pg-format";
 import { resUserSchemaWithoutPassword } from "../../schemas/usersSchemas";
 
 const createUserService = async (

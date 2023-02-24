@@ -1,11 +1,13 @@
-import { QueryConfig } from "pg";
-import { iLoginReq } from "../../interfaces/loginInterfaces";
-import { userQueryRes } from "../../interfaces/usersInterfaces";
-import { client } from "../../database";
-import { AppError } from "../../errors";
-import { compare } from "bcryptjs";
-import jwt from "jsonwebtoken";
 import "dotenv/config";
+
+import { AppError } from "../../errors";
+import { QueryConfig } from "pg";
+import { client } from "../../database";
+import { compare } from "bcryptjs";
+import { iLoginReq } from "../../interfaces/loginInterfaces";
+import { iUser } from "../../interfaces/usersInterfaces";
+import jwt from "jsonwebtoken";
+import { userQueryRes } from "../../interfaces/usersInterfaces";
 
 const loginService = async (data: iLoginReq): Promise<string> => {
   const queryString: string = `
@@ -24,13 +26,15 @@ const loginService = async (data: iLoginReq): Promise<string> => {
 
   const queryResult: userQueryRes = await client.query(queryConfig);
 
-  if (queryResult.rowCount === 0) {
+  const foundUser: iUser = queryResult.rows[0];
+
+  if (!foundUser) {
     throw new AppError("Wrong email or password", 401);
   }
 
   const checkPassword: boolean = await compare(
     data.password,
-    queryResult.rows[0].password
+    foundUser.password
   );
 
   if (!checkPassword) {
@@ -39,12 +43,12 @@ const loginService = async (data: iLoginReq): Promise<string> => {
 
   const token: string = jwt.sign(
     {
-      admin: queryResult.rows[0].admin,
+      admin: foundUser.admin,
     },
     process.env.SECRET_KEY!,
     {
       expiresIn: "24h",
-      subject: queryResult.rows[0].id + "",
+      subject: foundUser.id + "",
     }
   );
 

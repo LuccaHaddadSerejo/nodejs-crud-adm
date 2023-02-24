@@ -1,21 +1,23 @@
-import { Router } from "express";
+import {
+  checkIfUserIsAdmin,
+  checkUniqueEmail,
+  checkValidId,
+  matchLoggedUserWithParamId,
+} from "../middlewares/usersMiddlewares";
 import {
   createUsersController,
-  getLoggedUserController,
-  getAllUsersController,
-  updateUserController,
   deleteUserController,
+  getAllUsersController,
+  getLoggedUserController,
   recoverUserController,
+  updateUserController,
 } from "../controllers/usersControllers";
-import {
-  checkUniqueEmail,
-  checkIfUserIsAdmin,
-  matchLoggedUserWithParamId,
-  checkValidId,
-} from "../middlewares/usersMiddlewares";
-import checkReqData from "../middlewares/validateDataMiddleware";
-import checkIfTokenIsValid from "../middlewares/validateTokenMiddleware";
 import { reqUserSchema, updateUserSchema } from "../schemas/usersSchemas";
+
+import { Router } from "express";
+import checkIfTokenIsValid from "../middlewares/validateTokenMiddleware";
+import checkReqData from "../middlewares/validateDataMiddleware";
+
 const userRouters: Router = Router();
 
 userRouters.post(

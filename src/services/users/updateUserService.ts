@@ -1,11 +1,12 @@
-import { QueryConfig } from "pg";
-import format from "pg-format";
-import { client } from "../../database";
 import {
   iUserReq,
-  userWithoutPassword,
   userQueryRes,
+  userWithoutPassword,
 } from "../../interfaces/usersInterfaces";
+
+import { QueryConfig } from "pg";
+import { client } from "../../database";
+import format from "pg-format";
 import { resUserSchemaWithoutPassword } from "../../schemas/usersSchemas";
 
 const updateLoggedUser = async (
