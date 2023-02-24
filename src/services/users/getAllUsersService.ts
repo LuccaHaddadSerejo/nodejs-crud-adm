@@ -1,11 +1,10 @@
 import { client } from "../../database";
 import {
-  iUserReq,
   usersList,
   userQueryResWithoutPassword,
 } from "../../interfaces/usersInterfaces";
 
-const listAllUsersService = async (data: iUserReq): Promise<usersList> => {
+const listAllUsersService = async (): Promise<usersList> => {
   const queryString = `
         SELECT
             id, name, email, admin, active
