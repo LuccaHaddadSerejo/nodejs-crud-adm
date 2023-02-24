@@ -3,15 +3,15 @@ import format from "pg-format";
 import { client } from "../../database";
 import {
   iUserReq,
-  updatedUser,
-  userQueryRes,
+  userWithoutPassword,
+  userQueryResWithoutPassword,
 } from "../../interfaces/usersInterfaces";
-import { updateUserSchema } from "../../schemas/usersSchemas";
+import { resUserSchemaWithoutPassword } from "../../schemas/usersSchemas";
 
 const updateLoggedUser = async (
   data: iUserReq,
   id: number
-): Promise<updatedUser> => {
+): Promise<userWithoutPassword> => {
   let queryString: string = `
         SELECT 
             *
@@ -26,7 +26,9 @@ const updateLoggedUser = async (
     values: [id],
   };
 
-  let queryResult: userQueryRes = await client.query(queryConfig);
+  let queryResult: userQueryResWithoutPassword = await client.query(
+    queryConfig
+  );
 
   queryString = format(
     `
@@ -48,7 +50,7 @@ const updateLoggedUser = async (
 
   queryResult = await client.query(queryConfig);
 
-  return updateUserSchema.parse(queryResult.rows[0]);
+  return resUserSchemaWithoutPassword.parse(queryResult.rows[0]);
 };
 
 export default updateLoggedUser;

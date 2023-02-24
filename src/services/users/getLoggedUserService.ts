@@ -1,8 +1,14 @@
 import { QueryConfig } from "pg";
 import { client } from "../../database";
-import { iUser, userQueryRes } from "../../interfaces/usersInterfaces";
+import {
+  userWithoutPassword,
+  userQueryResWithoutPassword,
+} from "../../interfaces/usersInterfaces";
+import { resUserSchemaWithoutPassword } from "../../schemas/usersSchemas";
 
-const getLoggedUserService = async (data: number): Promise<iUser> => {
+const getLoggedUserService = async (
+  data: number
+): Promise<userWithoutPassword> => {
   const id: number = data;
 
   const queryString = `
@@ -19,9 +25,11 @@ const getLoggedUserService = async (data: number): Promise<iUser> => {
     values: [id],
   };
 
-  const queryResult: userQueryRes = await client.query(queryConfig);
+  const queryResult: userQueryResWithoutPassword = await client.query(
+    queryConfig
+  );
 
-  return queryResult.rows[0];
+  return resUserSchemaWithoutPassword.parse(queryResult.rows[0]);
 };
 
 export default getLoggedUserService;

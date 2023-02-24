@@ -1,35 +1,13 @@
 import { QueryConfig } from "pg";
-import format from "pg-format";
 import { client } from "../../database";
 import {
-  iUserReq,
-  userQueryRes,
+  userQueryResWithoutPassword,
   userWithoutPassword,
 } from "../../interfaces/usersInterfaces";
 import { resUserSchemaWithoutPassword } from "../../schemas/usersSchemas";
 
-const deleteUserService = async (
-  data: iUserReq,
-  id: number
-): Promise<userWithoutPassword> => {
-  let queryString: string = `
-        SELECT 
-            *
-        FROM
-            users
-        WHERE
-            id = $1
-      `;
-
-  let queryConfig: QueryConfig = {
-    text: queryString,
-    values: [id],
-  };
-
-  let queryResult: userQueryRes = await client.query(queryConfig);
-
-  queryString = format(
-    `
+const recoverUserService = async (id: number): Promise<userWithoutPassword> => {
+  const queryString: string = `
         UPDATE 
             users 
         SET
@@ -37,19 +15,17 @@ const deleteUserService = async (
         WHERE 
             id = $1
         RETURNING *;
-      `,
-    Object.keys(data),
-    Object.values(data)
-  );
-
-  queryConfig = {
+      `;
+  const queryConfig: QueryConfig = {
     text: queryString,
     values: [id],
   };
 
-  queryResult = await client.query(queryConfig);
+  const queryResult: userQueryResWithoutPassword = await client.query(
+    queryConfig
+  );
 
   return resUserSchemaWithoutPassword.parse(queryResult.rows[0]);
 };
 
-export default deleteUserService;
+export default recoverUserService;

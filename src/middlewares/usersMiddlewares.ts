@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { QueryConfig, QueryResult } from "pg";
 import { client } from "../database";
 import { AppError } from "../errors";
-import { iUserReq, userQueryRes } from "../interfaces/usersInterfaces";
+import { userQueryRes } from "../interfaces/usersInterfaces";
 
 const checkIfUserExists = async (
   req: Request,

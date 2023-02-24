@@ -40,7 +40,7 @@ const updateUserController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const updatedUser = await updateUserService(req.body, req.user.id);
+  const updatedUser = await updateUserService(req.body, +req.params.id);
 
   return res.status(201).json(updatedUser);
 };
@@ -49,7 +49,7 @@ const deleteUserController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  await deleteUserService(req.body, req.user.id);
+  await deleteUserService(+req.params.id);
 
   return res.status(204).json();
 };
@@ -58,7 +58,7 @@ const recoverUserController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const user = await recoverUserService(req.body, req.user.id);
+  const user = await recoverUserService(+req.params.id);
 
   return res.status(200).json(user);
 };
