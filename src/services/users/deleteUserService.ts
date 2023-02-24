@@ -1,27 +1,8 @@
 import { QueryConfig } from "pg";
-import format from "pg-format";
 import { client } from "../../database";
-import { iUserReq, userQueryRes } from "../../interfaces/usersInterfaces";
 
-const deleteUserService = async (data: iUserReq, id: number): Promise<void> => {
-  let queryString: string = `
-        SELECT 
-            *
-        FROM
-            users
-        WHERE
-            id = $1
-      `;
-
-  let queryConfig: QueryConfig = {
-    text: queryString,
-    values: [id],
-  };
-
-  let queryResult: userQueryRes = await client.query(queryConfig);
-
-  queryString = format(
-    `
+const deleteUserService = async (id: number): Promise<void> => {
+  const queryString: string = `
         UPDATE 
             users 
         SET
@@ -29,12 +10,8 @@ const deleteUserService = async (data: iUserReq, id: number): Promise<void> => {
         WHERE 
             id = $1
         RETURNING *;
-      `,
-    Object.keys(data),
-    Object.values(data)
-  );
-
-  queryConfig = {
+      `;
+  const queryConfig: QueryConfig = {
     text: queryString,
     values: [id],
   };

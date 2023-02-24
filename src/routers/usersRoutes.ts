@@ -15,7 +15,7 @@ import {
 } from "../middlewares/usersMiddlewares";
 import checkReqData from "../middlewares/validateDataMiddleware";
 import checkIfTokenIsValid from "../middlewares/validateTokenMiddleware";
-import { reqUserSchema } from "../schemas/usersSchemas";
+import { reqUserSchema, updateUserSchema } from "../schemas/usersSchemas";
 const userRouters: Router = Router();
 
 userRouters.post(
@@ -38,6 +38,7 @@ userRouters.patch(
   "/:id",
   checkValidId,
   checkIfTokenIsValid,
+  checkReqData(updateUserSchema),
   checkUniqueEmail,
   matchLoggedUserWithParamId,
   updateUserController
@@ -53,9 +54,9 @@ userRouters.delete(
 
 userRouters.put(
   "/:id/recover",
-  checkValidId,
   checkIfTokenIsValid,
-  matchLoggedUserWithParamId,
+  checkIfUserIsAdmin,
+  checkValidId,
   recoverUserController
 );
 
